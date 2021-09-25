@@ -20,7 +20,7 @@
 <script type="module" async="1">
 import parse from './index.js'
 
-const root = '#/site/'
+const root = 'site/'
 const rootFile = root + 'main'
 
 async function rendering(path) {
@@ -35,10 +35,10 @@ function reloading() {
 	if (hash === '' || hash === '#/') {
 		hash = rootFile
 	} else {
-		hash = root + hash
+		hash = root + hash.slice(2)
 	}
 
-	const path = hash.slice(2) + '.md'
+	const path = hash + '.md'
 	rendering(path)
 }
 
