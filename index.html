@@ -3,14 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic@6/picnic.min.css">
+	<link rel="stylesheet" href="./picnic.min.css">
 	<title>Markdown blog</title>
 	<style type="text/css">
-	body {
-		margin: 0;
-		padding: 8px;
-		box-sizing: border-box;
-	}
+		body {
+			margin: 0;
+			padding: 8px;
+			box-sizing: border-box;
+		}
 	</style>
 </head>
 
@@ -20,7 +20,8 @@
 <script type="module" async="1">
 import parse from './index.js'
 
-const rootFile = '#/README'
+const root = '#/site/'
+const rootFile = root + 'main'
 
 async function rendering(path) {
 	const response = await fetch(path)
@@ -29,8 +30,14 @@ async function rendering(path) {
 }
 
 function reloading() {
-	let hash = location.hash || rootFile
-	hash = hash === '#/' ? rootFile : hash
+	let hash = location.hash
+
+	if (hash === '' || hash === '#/') {
+		hash = rootFile
+	} else {
+		hash = root + hash
+	}
+
 	const path = hash.slice(2) + '.md'
 	rendering(path)
 }
