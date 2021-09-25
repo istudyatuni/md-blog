@@ -20,6 +20,8 @@
 <script type="module" async="1">
 import parse from './index.js'
 
+const rootFile = '#/README'
+
 async function rendering(path) {
 	const response = await fetch(path)
 	const text = await response.text()
@@ -27,7 +29,8 @@ async function rendering(path) {
 }
 
 function reloading() {
-	const hash = location.hash || '#/README'
+	let hash = location.hash || rootFile
+	hash = hash === '#/' ? rootFile : hash
 	const path = hash.slice(2) + '.md'
 	rendering(path)
 }

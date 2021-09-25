@@ -1,3 +1,3 @@
 # Second page
 
-[Main page](/)
+[Main page](#/)
