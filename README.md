@@ -7,3 +7,5 @@ Write what you want, place in `.md` files and publish as static site. All links 
 ```md
 [link](#/path/to/file)
 ```
+
+[Second page](#/folder/second)
