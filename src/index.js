@@ -1,4 +1,4 @@
-import parse from './snarkdown.js'
+import parse from './third/snarkdown.js'
 import { parseFrontmatter } from './frontmatter.js'
 
 const root = 'site/'
