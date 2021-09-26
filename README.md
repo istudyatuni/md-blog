@@ -7,3 +7,15 @@ Write what you want in `.md` files, place in `site` folder, and publish as stati
 ```md
 [link](#/second)
 ```
+
+## Additional data
+
+Simple frontmatter is supported, for example:
+
+```md
+---
+title: Second page
+---
+
+# Other content
+```

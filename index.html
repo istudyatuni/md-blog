@@ -34,14 +34,23 @@
 
 <script type="module" async="1">
 import parse from './snarkdown.js'
+import { parseFrontmatter } from './frontmatter.js'
 
 const root = 'site/'
 const rootFile = root + 'main'
 const content = document.getElementById('content')
 
+function applyFrontmatter(fm) {
+	if (fm && Object.keys(fm).length === 0) {
+		return
+	}
+	document.title = fm.title || document.title
+}
+
 async function rendering(path) {
 	const response = await fetch(path)
-	const text = await response.text()
+	const { fm, text } = parseFrontmatter(await response.text())
+	applyFrontmatter(fm)
 	content.innerHTML = parse(text)
 }
 
