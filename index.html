@@ -11,10 +11,25 @@
 			padding: 8px;
 			box-sizing: border-box;
 		}
+		#content {
+			margin: auto;
+			padding-top: 80px;
+			width: 90%;
+			max-width: 960px;
+		}
 	</style>
 </head>
 
 <body>
+	<nav>
+		<a href="#/" class="brand">
+			<span>Markdown blog</span>
+		</a>
+		<div class="menu">
+			<a href="https://github.com/istudyatuni/md-blog" class="pseudo button">GitHub</a>
+		</div>
+	</nav>
+	<main id="content"></main>
 </body>
 
 <script type="module" async="1">
@@ -22,11 +37,12 @@ import parse from './snarkdown.js'
 
 const root = 'site/'
 const rootFile = root + 'main'
+const content = document.getElementById('content')
 
 async function rendering(path) {
 	const response = await fetch(path)
 	const text = await response.text()
-	document.body.innerHTML = parse(text)
+	content.innerHTML = parse(text)
 }
 
 function reloading() {
