@@ -12,10 +12,12 @@ function applyFrontmatter(fm) {
 	document.title = fm.title || document.title
 }
 
-function printError(code, text, url) {
-	content.innerHTML = `<center><h2>${code}</h2>
-	<p><i>${text}</i></p>
-	<p>URL: <code>${url}</code></p>
+function showError(code, text, url) {
+	content.innerHTML =
+	`<center>
+		<h2>${code}</h2>
+		<p><i>${text}</i></p>
+		<p>URL: <code>${url}</code></p>
 	</center>`
 	document.title = code
 }
@@ -27,7 +29,7 @@ async function rendering(path) {
 		applyFrontmatter(fm)
 		content.innerHTML = parse(text)
 	} else {
-		printError(response.status, response.statusText, response.url)
+		showError(response.status, response.statusText, response.url)
 	}
 }
 

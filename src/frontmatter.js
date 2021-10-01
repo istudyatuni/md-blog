@@ -18,6 +18,11 @@ function parseYaml(content) {
 	return result
 }
 
+/**
+ * Parse YAML front matter from markdown
+ * @param  {String}         text File content
+ * @return {Object, String}      YAML as object and Markdown content
+ */
 export function parseFrontmatter(text) {
 	let lines = text.split('\n')
 	if (lines[0] !== sep) {
