@@ -1,9 +1,12 @@
 import parse from './third/snarkdown.js'
 import { parseFrontmatter } from './frontmatter.js'
 
+const hashPrefix = '#/'
 const root = 'site/'
 const rootFile = root + 'main'
 const content = document.getElementById('content')
+
+let isRedirect = false
 
 function applyFrontmatter(fm) {
 	if (fm && Object.keys(fm).length === 0) {
@@ -23,9 +26,18 @@ function showError(code, text, url) {
 }
 
 async function rendering(path) {
+	isRedirect = false
+
 	const response = await fetch(path)
 	if (response.ok) {
 		const { fm, text } = parseFrontmatter(await response.text())
+
+		if (fm.redirect) {
+			isRedirect = true
+			window.location.replace(hashPrefix + fm.redirect)
+			return
+		}
+
 		applyFrontmatter(fm)
 		content.innerHTML = parse(text)
 	} else {
@@ -36,7 +48,7 @@ async function rendering(path) {
 function reloading() {
 	let hash = location.hash
 
-	if (hash === '' || hash === '#/') {
+	if (hash === '' || hash === hashPrefix) {
 		hash = rootFile
 	} else {
 		hash = root + hash.slice(2)

@@ -1,0 +1,5 @@
+---
+redirect: second
+---
+
+# Redirect page

@@ -19,3 +19,10 @@ title: Second page
 
 # Other content
 ```
+
+Supported keys:
+
+```yaml
+title: Page title
+redirect: path/to/new/page # path for redirect
+```
