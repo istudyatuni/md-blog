@@ -1,5 +1,6 @@
 import parse from './third/snarkdown.js'
 import { parseFrontmatter } from './frontmatter.js'
+import { saveData, hashString, checkHash } from './cache.js'
 
 const hashPrefix = '#/'
 const root = 'site/'
@@ -25,12 +26,26 @@ function showError(code, text, url) {
 	document.title = code
 }
 
-async function rendering(path) {
+function caching(path, fileContent, text) {
+	const hash = hashString(fileContent)
+	const data = checkHash(path, hash)
+
+	if (data !== null) {
+		content.innerHTML = data
+	} else {
+		const html = parse(text)
+		content.innerHTML = html
+		saveData(path, hash, html)
+	}
+}
+
+async function fetching(path) {
 	isRedirect = false
 
 	const response = await fetch(path)
 	if (response.ok) {
-		const { fm, text } = parseFrontmatter(await response.text())
+		const responseContent = await response.text()
+		const { fm, text } = parseFrontmatter(responseContent)
 
 		if (fm.redirect) {
 			isRedirect = true
@@ -39,7 +54,7 @@ async function rendering(path) {
 		}
 
 		applyFrontmatter(fm)
-		content.innerHTML = parse(text)
+		caching(path, responseContent, text)
 	} else {
 		showError(response.status, response.statusText, response.url)
 	}
@@ -55,7 +70,7 @@ function reloading() {
 	}
 
 	const path = hash + '.md'
-	rendering(path)
+	fetching(path)
 }
 
 reloading()
